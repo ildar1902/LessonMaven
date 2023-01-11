@@ -2,10 +2,7 @@ package com.ildar.recipesapp.controllers;
 
 import com.ildar.recipesapp.model.Recipe;
 import com.ildar.recipesapp.services.RecipeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/recipe")
@@ -16,12 +13,12 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @GetMapping("/create")
-    public void addRecipe(@RequestParam Recipe recipe) {
+    @PostMapping("/create")
+    public void addRecipe(@RequestBody Recipe recipe) {
         recipeService.addRecipe(recipe);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/info")
     public Recipe getRecipe(@RequestParam int recipeNumber) {
         return recipeService.getRecipe(recipeNumber);
     }
