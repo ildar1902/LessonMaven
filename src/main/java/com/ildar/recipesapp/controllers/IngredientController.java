@@ -1,26 +1,27 @@
 package com.ildar.recipesapp.controllers;
-
 import com.ildar.recipesapp.model.Ingredient;
 import com.ildar.recipesapp.services.IngredientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ingredient")
 
 public class IngredientController {
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
 
-    @PostMapping("/create")
-    public void addIngredient(@RequestBody Ingredient ingredient) {
-        ingredientService.addIngredient(ingredient);
+    @PostMapping
+    public Ingredient add(@RequestBody Ingredient ingredient) {
+        ingredientService.add(ingredient);
+        return ingredient;
     }
 
-    @GetMapping("/info")
-    public Ingredient getIngredient(@RequestParam int ingredientNumber) {
-        return ingredientService.getIngredient(ingredientNumber);
+    @GetMapping("/{id}")
+    public ResponseEntity<Ingredient>  get(@PathVariable int id) {
+        return ResponseEntity.of(ingredientService.get(id));
     }
 }

@@ -1,12 +1,12 @@
 package com.ildar.recipesapp.services;
 
 import com.ildar.recipesapp.model.Ingredient;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Optional;
+
 
 public interface IngredientService {
-    void addIngredient(Ingredient ingredient);
+    Ingredient add(Ingredient ingredient);
 
-    Ingredient getIngredient(int number);
+    Optional<Ingredient> get(int id);
 }

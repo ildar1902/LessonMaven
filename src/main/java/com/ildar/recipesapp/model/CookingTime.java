@@ -5,10 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-
-public class Ingredient {
-    String name;
-    Integer quantity;
-    String measureUnit;
-
+public class CookingTime {
+    private int duration;
+    private String timeUnit;
 }

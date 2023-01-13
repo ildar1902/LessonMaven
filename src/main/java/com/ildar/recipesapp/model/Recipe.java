@@ -9,7 +9,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Recipe {
     private String name;
-    private Long cookingTime;
+    private CookingTime cookingTime;
     Set<Ingredient> ingredients;
-    Set<String> cookingSteps;
+    Set<String> steps;
 }
