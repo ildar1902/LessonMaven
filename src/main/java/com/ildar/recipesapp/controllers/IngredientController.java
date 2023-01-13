@@ -4,6 +4,8 @@ import com.ildar.recipesapp.services.IngredientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/ingredient")
 
@@ -23,5 +25,19 @@ public class IngredientController {
     @GetMapping("/{id}")
     public ResponseEntity<Ingredient>  get(@PathVariable int id) {
         return ResponseEntity.of(ingredientService.get(id));
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Ingredient> edit(@PathVariable int id, @RequestBody Ingredient ingredient) {
+        return ResponseEntity.of(ingredientService.edit(id, ingredient));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Ingredient> delete(@PathVariable int id) {
+        return ResponseEntity.of(ingredientService.delete(id));
+    }
+
+    @GetMapping
+    public Map<Integer, Ingredient> getAll() {
+        return ingredientService.getAll();
     }
 }

@@ -18,8 +18,23 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public Optional<Ingredient>  get(int id) {
+    public Optional<Ingredient> get(int id) {
         return Optional.ofNullable(ingredients.get(id));
+    }
+
+    @Override
+    public Optional<Ingredient> edit(int id, Ingredient ingredient) {
+        return Optional.ofNullable(ingredients.replace(id, ingredient));
+    }
+
+    @Override
+    public Optional<Ingredient> delete(int id) {
+        return Optional.ofNullable(ingredients.remove(id));
+    }
+
+    @Override
+    public Map<Integer, Ingredient> getAll() {
+        return new TreeMap<>(ingredients);
     }
 
 
