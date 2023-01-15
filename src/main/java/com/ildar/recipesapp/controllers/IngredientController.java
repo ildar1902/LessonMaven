@@ -1,11 +1,13 @@
 package com.ildar.recipesapp.controllers;
 import com.ildar.recipesapp.model.Ingredient;
 import com.ildar.recipesapp.services.IngredientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-
+@Tag(name="Ингредиент controller", description = "API для работы с ингредиентами")
 @RestController
 @RequestMapping("/ingredient")
 
@@ -15,27 +17,28 @@ public class IngredientController {
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
-
+@Operation(summary = "Добавить ингредиент", description = "Здесь выполняется добавление нового ингредиента")
     @PostMapping
     public Ingredient add(@RequestBody Ingredient ingredient) {
         ingredientService.add(ingredient);
         return ingredient;
     }
-
+@Operation(summary = "Получить ингредиент по id", description = "Здесь выполняется вывод ингредиентов по id")
     @GetMapping("/{id}")
     public ResponseEntity<Ingredient>  get(@PathVariable int id) {
         return ResponseEntity.of(ingredientService.get(id));
     }
+    @Operation(summary = "Изменить ингредиент", description = "Здесь выполняется редактирование ингредиентов")
     @PutMapping("/{id}")
     public ResponseEntity<Ingredient> edit(@PathVariable int id, @RequestBody Ingredient ingredient) {
         return ResponseEntity.of(ingredientService.edit(id, ingredient));
     }
-
+@Operation(summary = "Удалить ингредиент", description = "ЗДесь выполняется удаление ингредиента по id")
     @DeleteMapping("/{id}")
     public ResponseEntity<Ingredient> delete(@PathVariable int id) {
         return ResponseEntity.of(ingredientService.delete(id));
     }
-
+@Operation(summary = "Показать весь список ингредиентов")
     @GetMapping
     public Map<Integer, Ingredient> getAll() {
         return ingredientService.getAll();
