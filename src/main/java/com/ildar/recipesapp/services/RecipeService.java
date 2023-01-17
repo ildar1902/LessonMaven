@@ -7,6 +7,8 @@ import java.util.Optional;
 
 
 public interface RecipeService {
+    String getFilePath();
+
     String add(Recipe recipe);
 
     Optional<Recipe> get(int number);

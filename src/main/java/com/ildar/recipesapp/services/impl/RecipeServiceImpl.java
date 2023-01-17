@@ -25,6 +25,10 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeServiceImpl(FileService fileService) {
         this.fileService = fileService;
     }
+@Override
+    public String getFilePath() {
+        return filePath;
+    }
 
     @Override
     public String add(Recipe recipe) {

@@ -33,6 +33,11 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    public String getFilePath() {
+        return filePath;
+    }
+
+    @Override
     public Ingredient add(Ingredient ingredient) {
         ingredients.put(idCounter++, ingredient);
         saveFile();

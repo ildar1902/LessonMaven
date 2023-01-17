@@ -7,6 +7,8 @@ import java.util.Optional;
 
 
 public interface IngredientService {
+    String getFilePath();
+
     Ingredient add(Ingredient ingredient);
 
     Optional<Ingredient> get(int id);
