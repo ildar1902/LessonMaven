@@ -14,6 +14,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public void saveToFile(String path, String json) {
         try {
+            cleanFile(path);
             Files.writeString(Path.of(path), json);
         } catch (IOException e) {
             e.printStackTrace();
