@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ildar.recipesapp.model.Ingredient;
 import com.ildar.recipesapp.services.FileService;
 import com.ildar.recipesapp.services.IngredientService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -15,13 +16,16 @@ import java.util.TreeMap;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
-    private final FileService ingredientFileService;
+    private final FileService fileService;
     private static Map<Integer, Ingredient> ingredients = new TreeMap<>();
     private static int idCounter = 1;
+    @Value("${path.to.ingredient.data.file}")
+    private String filePath;
 
-    public IngredientServiceImpl(FileService ingredientFileService) {
-        this.ingredientFileService = ingredientFileService;
+    public IngredientServiceImpl(FileService fileService) {
+        this.fileService = fileService;
     }
+
 
     @PostConstruct
     private void init() {
@@ -60,14 +64,14 @@ public class IngredientServiceImpl implements IngredientService {
     private void saveFile() {
         try {
             String json = new ObjectMapper().writeValueAsString(ingredients);
-            ingredientFileService.saveToIngredientFile(json);
+            fileService.saveToFile(filePath, json);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void readFromFile() {
-        String json = ingredientFileService.readIngredientFile();
+        String json = fileService.readFromFile(filePath);
         try {
             ingredients = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredient>>() {
             });

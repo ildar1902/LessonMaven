@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ildar.recipesapp.model.Recipe;
 import com.ildar.recipesapp.services.FileService;
 import com.ildar.recipesapp.services.RecipeService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,11 +17,13 @@ import java.util.TreeMap;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private static Map<Integer, Recipe> recipes = new TreeMap<>();
-    private final FileService recipeFileService;
+    private final FileService fileService;
     private static int recipeId = 0;
+    @Value("${path.to.recipe.data.file}")
+    private String filePath;
 
-    public RecipeServiceImpl(FileService recipeFileService) {
-        this.recipeFileService = recipeFileService;
+    public RecipeServiceImpl(FileService fileService) {
+        this.fileService = fileService;
     }
 
     @Override
@@ -60,14 +63,14 @@ public class RecipeServiceImpl implements RecipeService {
     private void saveFile() {
         try {
             String json = new ObjectMapper().writeValueAsString(recipes);
-            recipeFileService.saveToRecipeFile(json);
+            fileService.saveToFile(filePath, json);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void readFromFile() {
-        String json = recipeFileService.readRecipeFile();
+        String json = fileService.readFromFile(filePath);
         try {
            recipes = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
             });

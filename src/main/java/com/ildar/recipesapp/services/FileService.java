@@ -1,15 +1,10 @@
 package com.ildar.recipesapp.services;
 
 public interface FileService {
-    boolean saveToRecipeFile(String json);
 
-    String readRecipeFile();
+    void saveToFile(String path, String json);
 
-    boolean cleanRecipeFile();
+    String readFromFile(String path);
 
-    boolean saveToIngredientFile(String json);
-
-    String readIngredientFile();
-
-    boolean cleanIngredientFile();
+    void cleanFile(String path);
 }
