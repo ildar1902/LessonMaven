@@ -7,9 +7,11 @@ import com.ildar.recipesapp.model.Recipe;
 import com.ildar.recipesapp.services.FileService;
 import com.ildar.recipesapp.services.RecipeService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -25,7 +27,8 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeServiceImpl(FileService fileService) {
         this.fileService = fileService;
     }
-@Override
+
+    @Override
     public String getFilePath() {
         return filePath;
     }
@@ -76,11 +79,22 @@ public class RecipeServiceImpl implements RecipeService {
     private void readFromFile() {
         String json = fileService.readFromFile(filePath);
         try {
-           recipes = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
+            recipes = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Recipe>>() {
             });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+@Override
+@Nullable
+public byte[] downloadFile() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Recipe recipe : recipes.values()) {
+            stringBuilder.append(recipe).append("\n").append("******************************************")
+                    .append("\n")
+                    .append("\n");
+        }
+        return stringBuilder.toString().getBytes(StandardCharsets.UTF_8);
     }
 }
 

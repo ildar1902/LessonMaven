@@ -18,4 +18,6 @@ public interface RecipeService {
     Optional<Recipe> delete(int id);
 
     Map<Integer, Recipe> getAll();
+
+    byte[] downloadFile();
 }

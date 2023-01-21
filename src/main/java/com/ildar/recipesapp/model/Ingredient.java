@@ -9,8 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class Ingredient {
-    String name;
-    Integer quantity;
-    String measureUnit;
+    private String name;
+    private Integer quantity;
+    private String measureUnit;
 
+    @Override
+    public String toString() {
+        return name + " - " + quantity + " " + measureUnit;
+    }
 }

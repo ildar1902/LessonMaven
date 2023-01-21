@@ -10,4 +10,9 @@ import lombok.NoArgsConstructor;
 public class CookingTime {
     private int duration;
     private String timeUnit;
+
+    @Override
+    public String toString() {
+        return duration + " " + timeUnit;
+    }
 }

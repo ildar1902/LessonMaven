@@ -6,8 +6,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Map;
 
@@ -72,5 +75,20 @@ public class RecipeController {
         return recipeService.getAll();
     }
 
+    @Operation(
+            summary = "Скачать рецепты в текстовом файле",
+            description = "Чтобы скачать рецепты в текстовом файле, нажмите кнопку \"Download file\"")
+    @GetMapping("/download/recipe")
+    public ResponseEntity<byte[]> downloadTextFile() {
+        byte[] data = recipeService.downloadFile();
+        if (data == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok()
+                .contentLength(data.length)
+                .contentType(MediaType.TEXT_PLAIN)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"RecipesText.txt\"")
+                .body(data);
+    }
 }
 

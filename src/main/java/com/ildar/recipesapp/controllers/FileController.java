@@ -74,7 +74,7 @@ public class FileController {
 
     @PostMapping(value = "/import/ingredient", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> uploadIngredientDataFile(@RequestParam MultipartFile file) {
-    fileService.cleanFile(ingredientService.getFilePath());
+        fileService.cleanFile(ingredientService.getFilePath());
         File dataFile = fileService.getDataFile(ingredientService.getFilePath());
         try (FileOutputStream fos = new FileOutputStream(dataFile)) {
             IOUtils.copy(file.getInputStream(), fos);
